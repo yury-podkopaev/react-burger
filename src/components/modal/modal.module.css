@@ -1,0 +1,27 @@
+.modal {
+    opacity: 100%;
+    position: fixed;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; 
+    z-index: 999;
+    background-color: #000;
+}
+
+.body {
+    height: 539px;
+    width: 720px;
+}
+
+.icon {
+    cursor: pointer;
+}

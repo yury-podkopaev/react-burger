@@ -1,0 +1,5 @@
+.body {
+  display: flex;
+  justify-content: space-evenly;
+  height: 91vh;
+}

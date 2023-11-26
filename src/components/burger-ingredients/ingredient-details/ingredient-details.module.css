@@ -1,0 +1,9 @@
+.image{
+    position: relative;
+}
+
+.body {
+    display: flex;
+    justify-content: space-around;
+    color: #8585AD;
+}
