@@ -14,17 +14,17 @@ export const Modal = (props: ModalProps) => {
     };
     document.addEventListener("keydown", handleEsc);
     return () => document.removeEventListener("keydown", handleEsc);
-  }, []);
+  }, [props]);
 
   return createPortal(
     <>
       <div className={styles.modal}>
-        <header className={`pt-10 pl-10 pr-10 text text_type_main-medium`}>
+        <div className={`${styles.header} pt-10 pl-20 pr-10 text text_type_main-medium`}>
           {props.header}
-          <div className={styles.icon}>
-          <CloseIcon type="primary" onClick={props.onClose} />
+          <div className={`${styles.icon} mr-10`}>
+            <CloseIcon type="primary" onClick={props.onClose} />
           </div>
-        </header>
+        </div>
         <div className={`${styles.body}`}>{props.children}</div>
       </div>
       <ModalOverlay onClick={props.onClose}/>

@@ -1,6 +1,14 @@
-.header {
+.tabname {
     display: flex;
     margin-top: 1em;
+}
+
+.header {
+    display: flex;
+}
+
+.tabheader {
+    display: flex;
 }
 
 .ingredient {

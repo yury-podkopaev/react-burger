@@ -10,6 +10,7 @@ import { IngredientDetailsProps } from "../burger-ingredients/ingredient-details
 import { useState } from "react";
 import { Modal } from "../modal/modal.component";
 import { OrderDetails } from "../order-details/order-details.component";
+import { INGREDIENT_TYPE } from "../../constants";
 
 const BurgerConstructor = (props: BurgerConstructorProps) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -23,12 +24,12 @@ const BurgerConstructor = (props: BurgerConstructorProps) => {
   };
 
   const firstBun = props.data.find((entry) => {
-    return entry.type === "bun";
+    return entry.type === INGREDIENT_TYPE.BUN;
   });
 
   return (
     <>
-      <div style={{ marginTop: "8em" }}>
+      <div key={firstBun?._id} className={`mt-25`}>
         <ConstructorElement
           type="top"
           text={firstBun!.name}
@@ -39,17 +40,16 @@ const BurgerConstructor = (props: BurgerConstructorProps) => {
       </div>
       <div className={`${styles.body} custom-scroll`}>
         {props.data.map((entry: IngredientDetailsProps) => {
-          const isBun = entry.type === "bun";
+          const isBun = entry.type === INGREDIENT_TYPE.BUN;
           return (
             <>
               {!isBun && (
-                <div>
+                <div key={entry._id}>
                   <DragIcon type="primary" />
                   <ConstructorElement
                     text={entry.name}
                     thumbnail={entry.image_mobile}
                     price={entry.price}
-                    isLocked={false}
                   />
                 </div>
               )}
@@ -65,9 +65,11 @@ const BurgerConstructor = (props: BurgerConstructorProps) => {
         price={firstBun!.price}
         isLocked={true}
       />
-      <div style={{ marginTop: "2em", display: "flex" }}>
-        <span className="text text_type_digits-medium">666</span>
-        <CurrencyIcon type="primary" />
+      <div className={`${styles.footer} mt-10`}>
+        <div className={`${styles.price} mr-10`}>
+          <span className="text text_type_digits-medium mr-1">666</span>
+          <CurrencyIcon type="primary" />
+        </div>
         <Button htmlType="submit" type="primary" onClick={onButtonClick}>
           Оформить заказ
         </Button>

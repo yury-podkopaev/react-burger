@@ -1,8 +1,12 @@
 .body {
-    display: flex;
+    display: grid;
     justify-items: center;
-    column-count: 1;
-    flex-wrap: wrap;
     position: relative;
     cursor: pointer;
+}
+
+.price {
+    display: block;
+    justify-content: flex-end;
+    align-items: center;
 }

@@ -7,3 +7,12 @@
     margin-bottom: 1em;
     row-gap: 1em;
 }
+
+.topElement {
+    margin-top: 8em;
+}
+
+.footer {
+  display: flex;
+  justify-content: right;
+}

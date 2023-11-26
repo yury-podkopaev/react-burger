@@ -1,0 +1,10 @@
+.body {
+    display: grid;
+    justify-content: center;
+}
+
+.await {
+   display: grid;
+   justify-content: center;
+   color: #8585ad;
+}

@@ -1,45 +1,46 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/tab";
 import styles from "./burger-ingredients.module.css";
-import React from "react";
+import React, { SyntheticEvent } from "react";
 import Ingredient from "./ingredient/ingredient.component";
 import { BurgerIngredientsProps } from "./burger-ingredients.types";
 import { IngredientDetailsProps } from "./ingredient-details/ingredient-details.types";
 import { Modal } from "../modal/modal.component";
 import { IngredientDetails } from "./ingredient-details/ingredient-details.component";
+import { INGREDIENT_TYPE } from "../../constants";
 
 const BurgerIngredients = (props: BurgerIngredientsProps) => {
-  const [currentTab, setCurrentTab] = React.useState("bun");
+  const [currentTab, setCurrentTab] = React.useState(INGREDIENT_TYPE.BUN);
   const [currentIngredient, setCurrentIngredient] =
     React.useState<IngredientDetailsProps>();
 
   const tabs = [
     {
       text: "Булки",
-      type: "bun",
-      active: currentTab === "bun",
+      type: INGREDIENT_TYPE.BUN,
+      active: currentTab === INGREDIENT_TYPE.BUN,
       onClick: () => {
-        setCurrentTab("bun");
+        setCurrentTab(INGREDIENT_TYPE.BUN);
       },
     },
     {
       text: "Соусы",
-      type: "sauce",
-      active: currentTab === "sauce",
+      type: INGREDIENT_TYPE.SAUCE,
+      active: currentTab === INGREDIENT_TYPE.SAUCE,
       onClick: () => {
-        setCurrentTab("sauce");
+        setCurrentTab(INGREDIENT_TYPE.SAUCE);
       },
     },
     {
       text: "Начинки",
-      type: "main",
-      active: currentTab === "main",
+      type: INGREDIENT_TYPE.MAIN,
+      active: currentTab === INGREDIENT_TYPE.MAIN,
       onClick: () => {
-        setCurrentTab("main");
+        setCurrentTab(INGREDIENT_TYPE.MAIN);
       },
     },
   ];
 
-  const onOpen = (entry: any) => {
+  const onOpen = (entry: SyntheticEvent) => {
     const id = entry.currentTarget.id;
     setCurrentIngredient(props.data.find((ingr) => ingr._id === id));
   };
@@ -50,10 +51,10 @@ const BurgerIngredients = (props: BurgerIngredientsProps) => {
 
   return (
     <>
-      <span className={`text text_type_main-large mt-10 mb-5`} style={{display:"flex"}}>
+      <span className={`${styles.header} text text_type_main-large mt-10 mb-5`}>
         Соберите бургер
       </span>
-      <div style={{ display: "flex" }}>
+      <div className={`${styles.tabheader}`}>
         {tabs.map((tab) => {
           return (
             <Tab
@@ -72,7 +73,7 @@ const BurgerIngredients = (props: BurgerIngredientsProps) => {
           return (
             <React.Fragment key={tab.type}>
               <span
-                className={`${styles.header} text text_type_main-medium mt-10 mb-6`}
+                className={`${styles.tabname} text text_type_main-medium mt-10 mb-6`}
               >
                 {tab.text}
               </span>

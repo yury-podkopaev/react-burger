@@ -15,11 +15,18 @@
     overflow: hidden; 
     z-index: 999;
     background-color: #000;
+    border-radius: 25px;
 }
 
 .body {
     height: 539px;
     width: 720px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .icon {

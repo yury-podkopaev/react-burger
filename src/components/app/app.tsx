@@ -1,8 +1,9 @@
 import React from "react";
 import styles from "./app.module.css";
-import { AppHeader } from "./components/app-header/app-header.component";
-import { BurgerConstructor } from "./components/burger-constructor/burger-constructor.component";
-import { BurgerIngredients } from "./components/burger-ingredients/burger-ingredients.component";
+import { AppHeader } from "../app-header/app-header.component";
+import { BurgerConstructor } from "../burger-constructor/burger-constructor.component";
+import { BurgerIngredients } from "../burger-ingredients/burger-ingredients.component";
+import { BASE_URL } from "../../constants";
 
 function App() {
   const [state, setState] = React.useState({
@@ -14,13 +15,12 @@ function App() {
   React.useEffect(() => {
     const getIngredients = async () => {
       setState({ ...state, isLoading: true });
-      await fetch("https://norma.nomoreparties.space/api/ingredients")
-        .then((res) => res.json())
+      await fetch(`${BASE_URL}/ingredients`)
+        .then((res) =>  res.ok ? res.json() : res.json().then((err) => Promise.reject(err)))
         .then((res) =>
           setState({ ...state, ingredients: res.data, isLoading: false })
         )
-        .catch((err) => {
-          console.error(err);
+        .catch(() => {
           setState({ ...state, hasError: true, isLoading: false });
         });
     };
