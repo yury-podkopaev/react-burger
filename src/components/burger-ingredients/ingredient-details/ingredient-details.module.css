@@ -1,0 +1,14 @@
+.image{
+    position: relative;
+}
+
+.body {
+    display: flex;
+    justify-content: space-around;
+    color: #8585AD;
+}
+
+.name {
+    display: flex;
+    justify-content: center;
+}

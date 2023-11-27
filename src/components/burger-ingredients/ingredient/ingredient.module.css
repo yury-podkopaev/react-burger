@@ -1,0 +1,12 @@
+.body {
+    display: grid;
+    justify-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.price {
+    display: block;
+    justify-content: flex-end;
+    align-items: center;
+}

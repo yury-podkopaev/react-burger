@@ -1,0 +1,23 @@
+.tabname {
+    display: flex;
+    margin-top: 1em;
+}
+
+.header {
+    display: flex;
+}
+
+.tabheader {
+    display: flex;
+}
+
+.ingredient {
+    flex-flow: column wrap;
+    column-count: 2;
+    column-width: 10em;
+}
+
+.list {
+    height: 77vh;
+    overflow-y: scroll;
+}

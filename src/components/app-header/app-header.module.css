@@ -1,0 +1,33 @@
+.header {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+  background-color: #1c1c21;
+}
+
+.menu {
+  display: flex;
+  width: 75%;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  justify-self: center;
+}
+
+.profile {
+  display: flex;
+  justify-self: end;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+.button {
+  display: flex;
+  align-items: self-start;
+  color: #8585ad;
+}
