@@ -1,46 +1,45 @@
-import React from "react";
 import styles from "./app.module.css";
 import { AppHeader } from "../app-header/app-header.component";
 import { BurgerConstructor } from "../burger-constructor/burger-constructor.component";
 import { BurgerIngredients } from "../burger-ingredients/burger-ingredients.component";
-import { BASE_URL } from "../../constants";
+import { compose } from "redux";
+import { useAppSelector } from "../../services/hooks";
+import {
+  selectIngredients,
+  selectIngredientsIsError,
+  selectIngredientsLoading,
+} from "../../services/burger-ingredients.store";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { ErrorComponent } from "../error/error.component";
+
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
 
 function App() {
-  const [state, setState] = React.useState({
-    ingredients: [],
-    isLoading: true,
-    hasError: false,
-  });
-
-  React.useEffect(() => {
-    const getIngredients = async () => {
-      setState({ ...state, isLoading: true });
-      await fetch(`${BASE_URL}/ingredients`)
-        .then((res) =>  res.ok ? res.json() : res.json().then((err) => Promise.reject(err)))
-        .then((res) =>
-          setState({ ...state, ingredients: res.data, isLoading: false })
-        )
-        .catch(() => {
-          setState({ ...state, hasError: true, isLoading: false });
-        });
-    };
-    getIngredients();
-  }, []);
+  const isLoading = useAppSelector(selectIngredientsLoading);
+  const isError = useAppSelector(selectIngredientsIsError);
+  const ingredients = useAppSelector(selectIngredients);
 
   return (
     <>
       <AppHeader />
-      {state.isLoading && "Загрузка"}
-      {state.hasError && "Ошибка"}
-      {!state.isLoading && !state.hasError && (
-        <section className={styles.body}>
-          <article>
-            <BurgerIngredients data={state.ingredients} />
-          </article>
-          <article>
-            <BurgerConstructor data={state.ingredients}/>
-          </article>
-        </section>
+      {isLoading && "Загрузка"}
+      {isError && <ErrorComponent />}
+      {!isLoading && !isError && (
+        <DndProvider backend={HTML5Backend}>
+          <section className={styles.body}>
+            <article>
+              <BurgerIngredients data={ingredients} />
+            </article>
+            <article>
+              <BurgerConstructor/>
+            </article>
+          </section>
+        </DndProvider>
       )}
     </>
   );

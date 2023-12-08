@@ -1,4 +1,5 @@
 export interface IngredientDetailsProps {
+    uuid?: any
     _id: string
     name: string,
     type: string,
