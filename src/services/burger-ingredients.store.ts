@@ -1,12 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./store";
-import { BASE_URL } from "../constants";
 import { IngredientDetailsProps } from "../components/burger-ingredients/ingredient-details/ingredient-details.types";
 import { fetchUrl } from "../utils/fetch-url";
 
 export const fetchIngredients = createAsyncThunk(
   "fetchIngredients",
-  async (obj, {rejectWithValue}) => {
+  async () => {
      return await fetchUrl('/ingredients')
   }
 );

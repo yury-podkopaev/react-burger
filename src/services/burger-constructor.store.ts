@@ -27,7 +27,6 @@ export const constructorSlice = createSlice({
           });
         } else {
           state.burger.push(action.payload);
-          state.burger.push(action.payload);
         }
       },
       prepare: (item) => {

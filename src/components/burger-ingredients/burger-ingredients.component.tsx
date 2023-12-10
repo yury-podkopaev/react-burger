@@ -20,7 +20,9 @@ const BurgerIngredients = () => {
   const burgerIngredients = useAppSelector(selectIngredients);
 
   const count = useCallback((item: IngredientDetailsProps) => {
-    return burgerConstructor.filter((ingr) => ingr._id === item._id).length;
+    return item.type === INGREDIENT_TYPE.BUN 
+      ? 2*burgerConstructor.filter((ingr) => ingr._id === item._id).length
+      : burgerConstructor.filter((ingr) => ingr._id === item._id).length;
   },[burgerConstructor]);
 
   useEffect(() => {

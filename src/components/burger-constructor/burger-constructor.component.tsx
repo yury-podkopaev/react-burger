@@ -47,7 +47,13 @@ const BurgerConstructor = () => {
 
   const totalPrice = useMemo(
     () =>
-      currentBurger.reduce((total, ingredient) => total + ingredient.price, 0),
+      currentBurger.reduce((total, ingredient) => {
+        total += ingredient.price;
+        if(ingredient.type === INGREDIENT_TYPE.BUN) {
+          total += ingredient.price;
+        }
+        return total;
+      }, 0),
     [currentBurger]
   );
 
