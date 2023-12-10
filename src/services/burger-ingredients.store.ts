@@ -1,17 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../components/app/store";
+import { RootState } from "./store";
 import { BASE_URL } from "../constants";
 import { IngredientDetailsProps } from "../components/burger-ingredients/ingredient-details/ingredient-details.types";
+import { fetchUrl } from "../utils/fetch-url";
 
 export const fetchIngredients = createAsyncThunk(
   "fetchIngredients",
   async (obj, {rejectWithValue}) => {
-      const response = await fetch(BASE_URL + "/ingredients");
-      if (response.ok) {
-        const data = await response.json();
-        return data;
-      }
-      return rejectWithValue(response.status);
+     return await fetchUrl('/ingredients')
   }
 );
 

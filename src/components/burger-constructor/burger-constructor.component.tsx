@@ -5,9 +5,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
-import { BurgerConstructorProps } from "./burger-constructor.types";
-import { IngredientDetailsProps } from "../burger-ingredients/ingredient-details/ingredient-details.types";
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Modal } from "../modal/modal.component";
 import { OrderDetails } from "../order-details/order-details.component";
 import { INGREDIENT_TYPE } from "../../constants";
@@ -21,7 +19,7 @@ import {
 import { IngredientProps } from "../burger-ingredients/ingredient/ingredient.types";
 import { useAppSelector } from "../../services/hooks";
 import { selectOrderNumber, sendOrder } from "../../services/order.store";
-import { store } from "../app/store";
+import { store } from "../../services/store";
 import { ErrorComponent } from "../error/error.component";
 import { DragContainer } from "./drag-container/drag-container.component";
 
@@ -41,13 +39,15 @@ const BurgerConstructor = () => {
 
   const [, dropBun] = useDrop({
     accept: INGREDIENT_TYPE.BUN,
-    drop: (item: IngredientDetailsProps) => {
-      dispatch(addIngredient(item));
+    drop: (item: IngredientProps) => {
+      const { onClick, ...details } = item;
+      dispatch(addIngredient(details));
     },
   });
 
   const totalPrice = useMemo(
-    () => currentBurger.reduce((total, ingredient) => total + ingredient.price, 0),
+    () =>
+      currentBurger.reduce((total, ingredient) => total + ingredient.price, 0),
     [currentBurger]
   );
 
@@ -57,7 +57,7 @@ const BurgerConstructor = () => {
   };
 
   const onSubmitButtonClick = async () => {
-    await store.dispatch(sendOrder(currentBurger.map(item => item._id)));    
+    await store.dispatch(sendOrder(currentBurger.map((item) => item._id)));
     setIsVisible(true);
   };
 
@@ -72,7 +72,7 @@ const BurgerConstructor = () => {
 
   return (
     <div className={`mt-25`}>
-      <div key={actualBun?._id} ref={dropBun}>
+      <div ref={dropBun}>
         <ConstructorElement
           type="top"
           text={
@@ -81,35 +81,34 @@ const BurgerConstructor = () => {
           thumbnail={actualBun?.image_mobile ?? " "}
           price={actualBun?.price ?? 0}
           isLocked={true}
+          key={actualBun?.uuid}
         />
       </div>
       <div className={`${styles.body} custom-scroll`} ref={drop}>
-        {currentBurger.map((entry: IngredientDetailsProps, index:number) => {
-          return (
-            <>
-              {entry.type !== INGREDIENT_TYPE.BUN && (
-                <DragContainer key={index} id={entry._id} index={index}>
-                  <DragIcon type="primary" />
-                  <ConstructorElement
-                    key={entry.uuid}
-                    text={entry.name}
-                    thumbnail={entry.image_mobile}
-                    price={entry.price}
-                    handleClose={() => onCloseButtonClick(entry)}
-                  />
-                </DragContainer>
-              )}
-            </>
+        {currentBurger.map((entry, index: number) => {
+          return entry.type !== INGREDIENT_TYPE.BUN ? (
+            <DragContainer key={entry.uuid} id={entry._id} index={index}>
+              <DragIcon type="primary" />
+              <ConstructorElement
+                key={entry.uuid}
+                text={entry.name}
+                thumbnail={entry.image_mobile}
+                price={entry.price}
+                handleClose={() => onCloseButtonClick(entry)}
+              />
+            </DragContainer>
+          ) : (
+            <></>
           );
         })}
       </div>
-
       <ConstructorElement
         type="bottom"
         text={actualBun?.name ? `${actualBun?.name} (низ)` : "Выберите булку"}
         thumbnail={actualBun?.image_mobile ?? " "}
         price={actualBun?.price ?? 0}
         isLocked={true}
+        key={actualBun?._id}
       />
       <div className={`${styles.footer} mt-10`}>
         <div className={`${styles.price} mr-10`}>
@@ -128,9 +127,11 @@ const BurgerConstructor = () => {
         </Button>
         {isVisible && (
           <Modal onClose={onClose}>
-            {orderNumber 
-              ? <OrderDetails orderNumber={orderNumber}/>
-              : <ErrorComponent />}
+            {orderNumber ? (
+              <OrderDetails orderNumber={orderNumber} />
+            ) : (
+              <ErrorComponent />
+            )}
           </Modal>
         )}
       </div>

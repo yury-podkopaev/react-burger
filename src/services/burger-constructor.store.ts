@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { IngredientDetailsProps } from "../components/burger-ingredients/ingredient-details/ingredient-details.types";
-import { RootState } from "../components/app/store";
+import { RootState } from "./store";
 import { INGREDIENT_TYPE } from "../constants";
 import { v4 as uuidv4 } from "uuid";
 
@@ -37,7 +37,7 @@ export const constructorSlice = createSlice({
     },
     removeIngredient: (state, action) => {
       state.burger = state.burger.filter(
-        (burger: IngredientDetailsProps) => burger.uuid !== action.payload.uuid
+        (burger) => burger.uuid !== action.payload.uuid
       );
     },
     clearBurgerConstructor: (state) => {

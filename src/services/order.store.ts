@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { BASE_URL } from "../constants";
-import { RootState } from "../components/app/store";
-import { clearBurgerConstructor } from "./burger-constructor.store";
+import { RootState } from "./store";
+import { fetchUrl } from "../utils/fetch-url";
 
 const initialState: {
   name: string;
@@ -11,19 +10,14 @@ const initialState: {
   order: { number: 0 },
 };
 
-export const sendOrder = createAsyncThunk("sendOrder", async (ingredients: string[], { rejectWithValue, dispatch }) => {
-    const response = await fetch(BASE_URL + "/orders", {
+export const sendOrder = createAsyncThunk("sendOrder", async (ingredients: string[]) => {
+    return await fetchUrl("/orders", {
       method: "POST",
       body: JSON.stringify({ ingredients }),
       headers: {
         "Content-Type": "application/json",
       },
     });
-    if(response.ok){
-      dispatch(clearBurgerConstructor())
-      return response.json();
-    }
-    return rejectWithValue(response.status);
 });
 
 export const orderSlice = createSlice({

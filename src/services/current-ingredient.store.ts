@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../components/app/store";
+import { RootState } from "./store";
 import { IngredientDetailsProps } from "../components/burger-ingredients/ingredient-details/ingredient-details.types";
 
 const initialState: { currentIngredient: IngredientDetailsProps } = {

@@ -8,7 +8,7 @@ const AppHeader = () => {
     { text: "Лента заказов", icon: <ListIcon type="secondary"/> },
   ];
   return (
-    <nav className={styles.header}>
+    <header className={styles.header}>
         <div className={styles.menu}>
             {menuButtons.map((btn, index) => {
                 return <a href='/' key={index} className={`${styles.button} mt-4`}>{btn.icon} <span className={`text text_type_main-small ml-2`}>{btn.text}</span></a>
@@ -16,7 +16,7 @@ const AppHeader = () => {
         <div className={styles.logo}><Logo/></div>
         <a href='/' className={`${styles.button} mt-4`}><ProfileIcon type="secondary"/> <span className={`text text_type_main-small ml-2`}>Личный кабинет</span></a>
         </div>
-    </nav>
+    </header >
   );
 };
 

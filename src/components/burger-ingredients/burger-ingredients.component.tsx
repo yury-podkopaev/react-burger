@@ -2,7 +2,6 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/
 import styles from "./burger-ingredients.module.css";
 import React, { SyntheticEvent, useCallback, useEffect } from "react";
 import Ingredient from "./ingredient/ingredient.component";
-import { BurgerIngredientsProps } from "./burger-ingredients.types";
 import { IngredientDetailsProps } from "./ingredient-details/ingredient-details.types";
 import { Modal } from "../modal/modal.component";
 import { IngredientDetails } from "./ingredient-details/ingredient-details.component";
@@ -11,12 +10,14 @@ import { useAppSelector } from "../../services/hooks";
 import { selectBurgerConstructor } from "../../services/burger-constructor.store";
 import { useDispatch } from "react-redux";
 import { clearCurrentIngredient, selectCurrentIngredient, setCurrentIngredient } from "../../services/current-ingredient.store";
+import { selectIngredients } from "../../services/burger-ingredients.store";
 
-const BurgerIngredients = (props: BurgerIngredientsProps) => {
+const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = React.useState(INGREDIENT_TYPE.BUN);
   const burgerConstructor = useAppSelector(selectBurgerConstructor);
   const currentIngredient = useAppSelector(selectCurrentIngredient);
   const dispatch = useDispatch();
+  const burgerIngredients = useAppSelector(selectIngredients);
 
   const count = useCallback((item: IngredientDetailsProps) => {
     return burgerConstructor.filter((ingr) => ingr._id === item._id).length;
@@ -58,7 +59,7 @@ const BurgerIngredients = (props: BurgerIngredientsProps) => {
 
   const onOpen = (entry: SyntheticEvent) => {
     const id = entry.currentTarget.id;
-    dispatch(setCurrentIngredient(props.data.find((ingr) => ingr._id === id)));
+    dispatch(setCurrentIngredient(burgerIngredients.find((ingr) => ingr._id === id)));
   };
 
   const onClose = () => {
@@ -106,11 +107,11 @@ const BurgerIngredients = (props: BurgerIngredientsProps) => {
                 {tab.text}
               </span>
               <div className={styles.ingredient}>
-                {props.data
+                {burgerIngredients
                   .filter(
-                    (entry: IngredientDetailsProps) => entry.type === tab.type
+                    (entry) => entry.type === tab.type
                   )
-                  .map((entry: IngredientDetailsProps) => {
+                  .map((entry) => {
                     return (
                       <Ingredient
                         key={entry._id}
