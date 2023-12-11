@@ -7,7 +7,7 @@ import { Modal } from "../modal/modal.component";
 import { IngredientDetails } from "./ingredient-details/ingredient-details.component";
 import { INGREDIENT_TYPE } from "../../constants";
 import { useAppSelector } from "../../services/hooks";
-import { selectBurgerConstructor } from "../../services/burger-constructor.store";
+import { selectBun, selectBurgerConstructor } from "../../services/burger-constructor.store";
 import { useDispatch } from "react-redux";
 import { clearCurrentIngredient, selectCurrentIngredient, setCurrentIngredient } from "../../services/current-ingredient.store";
 import { selectIngredients } from "../../services/burger-ingredients.store";
@@ -18,12 +18,13 @@ const BurgerIngredients = () => {
   const currentIngredient = useAppSelector(selectCurrentIngredient);
   const dispatch = useDispatch();
   const burgerIngredients = useAppSelector(selectIngredients);
+  const actualBun = useAppSelector(selectBun);
 
   const count = useCallback((item: IngredientDetailsProps) => {
-    return item.type === INGREDIENT_TYPE.BUN 
-      ? 2*burgerConstructor.filter((ingr) => ingr._id === item._id).length
+    return item._id === actualBun?._id
+      ? 2
       : burgerConstructor.filter((ingr) => ingr._id === item._id).length;
-  },[burgerConstructor]);
+  },[burgerConstructor, actualBun]);
 
   useEffect(() => {
     document.getElementById('scrollable')?.addEventListener('scroll', calculateActiveTab);

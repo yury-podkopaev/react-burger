@@ -16,7 +16,7 @@ export const DragContainer = (props: DragContainerType) => {
    const dispatch = useDispatch();
     
   const { children, id, index } = props;
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLLIElement>(null);
   const [{ handlerId }, drop] = useDrop<
     DragItem,
     void,
@@ -90,8 +90,8 @@ export const DragContainer = (props: DragContainerType) => {
 
   drag(drop(ref));
   return (
-    <div ref={ref} className={`${isDragging ? styles.dragging : styles.body}`} data-handler-id={handlerId}>
+    <li ref={ref} className={`mb-4 ${isDragging ? styles.dragging : styles.body}`} data-handler-id={handlerId}>
       {children}
-    </div>
+    </li>
   );
 };

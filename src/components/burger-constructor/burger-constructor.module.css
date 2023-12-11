@@ -8,6 +8,10 @@
     row-gap: 1em;
 }
 
+.list {
+  list-style-type: none;
+}
+
 .topElement {
     margin-top: 8em;
 }
