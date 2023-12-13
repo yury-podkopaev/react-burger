@@ -20,4 +20,5 @@
 .list {
     height: 77vh;
     overflow-y: scroll;
+    max-width: 81%;
 }

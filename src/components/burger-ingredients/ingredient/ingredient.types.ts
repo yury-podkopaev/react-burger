@@ -1,10 +1,7 @@
 import { SyntheticEvent } from "react";
+import { IngredientDetailsProps } from "../ingredient-details/ingredient-details.types";
 
-export interface IngredientProps {
-    id?: string,
-    name: string,
-    src: string,
-    price: number,
-    counter?: number,
+export interface IngredientProps extends IngredientDetailsProps {
     onClick?: (arg0: SyntheticEvent) => void,
+    count?: number,
 }

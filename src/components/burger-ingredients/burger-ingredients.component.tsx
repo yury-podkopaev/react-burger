@@ -1,17 +1,37 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/tab";
 import styles from "./burger-ingredients.module.css";
-import React, { SyntheticEvent } from "react";
+import React, { SyntheticEvent, useCallback, useEffect } from "react";
 import Ingredient from "./ingredient/ingredient.component";
-import { BurgerIngredientsProps } from "./burger-ingredients.types";
 import { IngredientDetailsProps } from "./ingredient-details/ingredient-details.types";
 import { Modal } from "../modal/modal.component";
 import { IngredientDetails } from "./ingredient-details/ingredient-details.component";
 import { INGREDIENT_TYPE } from "../../constants";
+import { useAppSelector } from "../../services/hooks";
+import { selectBun, selectBurgerConstructor } from "../../services/burger-constructor.store";
+import { useDispatch } from "react-redux";
+import { clearCurrentIngredient, selectCurrentIngredient, setCurrentIngredient } from "../../services/current-ingredient.store";
+import { selectIngredients } from "../../services/burger-ingredients.store";
 
-const BurgerIngredients = (props: BurgerIngredientsProps) => {
+const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = React.useState(INGREDIENT_TYPE.BUN);
-  const [currentIngredient, setCurrentIngredient] =
-    React.useState<IngredientDetailsProps>();
+  const burgerConstructor = useAppSelector(selectBurgerConstructor);
+  const currentIngredient = useAppSelector(selectCurrentIngredient);
+  const dispatch = useDispatch();
+  const burgerIngredients = useAppSelector(selectIngredients);
+  const actualBun = useAppSelector(selectBun);
+
+  const count = useCallback((item: IngredientDetailsProps) => {
+    return item._id === actualBun?._id
+      ? 2
+      : burgerConstructor.filter((ingr) => ingr._id === item._id).length;
+  },[burgerConstructor, actualBun]);
+
+  useEffect(() => {
+    document.getElementById('scrollable')?.addEventListener('scroll', calculateActiveTab);
+    return () => {
+      document.getElementById('scrollable')?.removeEventListener('scroll', calculateActiveTab);
+    };
+  })
 
   const tabs = [
     {
@@ -42,11 +62,23 @@ const BurgerIngredients = (props: BurgerIngredientsProps) => {
 
   const onOpen = (entry: SyntheticEvent) => {
     const id = entry.currentTarget.id;
-    setCurrentIngredient(props.data.find((ingr) => ingr._id === id));
+    dispatch(setCurrentIngredient(burgerIngredients.find((ingr) => ingr._id === id)));
   };
 
   const onClose = () => {
-    setCurrentIngredient(undefined);
+    dispatch(clearCurrentIngredient());
+  };
+
+  const calculateActiveTab = () => {
+    tabs.every(tab => {
+      const elem = document.getElementById(tab.type);
+      const bottom = elem?.getBoundingClientRect().bottom ?? 0;
+      if (bottom > 0) {
+        setCurrentTab(tab.type);
+        return false;
+      }
+      return true;
+    });
   };
 
   return (
@@ -68,30 +100,27 @@ const BurgerIngredients = (props: BurgerIngredientsProps) => {
           );
         })}
       </div>
-      <div className={`${styles.list} custom-scroll`}>
+      <div className={`${styles.list} custom-scroll`} id="scrollable">
         {tabs.map((tab) => {
           return (
             <React.Fragment key={tab.type}>
-              <span
+              <span id={tab.type}
                 className={`${styles.tabname} text text_type_main-medium mt-10 mb-6`}
               >
                 {tab.text}
               </span>
               <div className={styles.ingredient}>
-                {props.data
+                {burgerIngredients
                   .filter(
-                    (entry: IngredientDetailsProps) => entry.type === tab.type
+                    (entry) => entry.type === tab.type
                   )
-                  .map((entry: IngredientDetailsProps) => {
+                  .map((entry) => {
                     return (
                       <Ingredient
-                        id={entry._id}
                         key={entry._id}
-                        src={entry.image}
-                        name={entry.name}
-                        price={entry.price}
-                        counter={1 /* TEMP */}
+                        {...entry}
                         onClick={onOpen}
+                        count={count(entry)}
                       />
                     );
                   })}
@@ -99,9 +128,9 @@ const BurgerIngredients = (props: BurgerIngredientsProps) => {
             </React.Fragment>
           );
         })}
-        {currentIngredient && (
+        {currentIngredient._id && (
           <Modal onClose={onClose} header="Детали ингредиента">
-            <IngredientDetails {...currentIngredient!} />
+            <IngredientDetails {...currentIngredient} />
           </Modal>
         )}
       </div>
