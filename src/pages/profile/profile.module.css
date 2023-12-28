@@ -1,0 +1,19 @@
+.wrapper {
+    display: flex;
+    justify-content:center;
+}
+
+.body {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+.point {
+    height: 64px;
+    width: 320px;
+}
+
+.text {
+    color: #8585AD;
+}

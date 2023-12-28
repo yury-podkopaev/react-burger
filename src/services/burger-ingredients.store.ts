@@ -1,12 +1,17 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import { IngredientDetailsProps } from "../components/burger-ingredients/ingredient-details/ingredient-details.types";
-import { fetchUrl } from "../utils/fetch-url";
+import { fetchWithRefresh } from "../utils/fetch-with-refresh";
 
 export const fetchIngredients = createAsyncThunk(
   "fetchIngredients",
   async () => {
-     return await fetchUrl('/ingredients')
+     return await fetchWithRefresh('/ingredients', {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   }
 );
 

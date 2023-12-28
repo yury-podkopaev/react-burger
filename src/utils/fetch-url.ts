@@ -5,6 +5,6 @@ export const fetchUrl = async (url: string, options?: RequestInit) => {
         if (res.ok) {
             return res.json();
         }
-        return Promise.reject(`Ошибка ${res.status}`);
+        return res.json().then((err) => Promise.reject(err));
     });
 };

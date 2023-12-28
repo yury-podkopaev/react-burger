@@ -3,6 +3,8 @@ import { reducer as ingredientReducer } from './burger-ingredients.store';
 import { burgerConstructorReducer } from './burger-constructor.store';
 import { currentIngredientReducer } from './current-ingredient.store';
 import { orderReducer } from './order.store';
+import { authReducer } from './auth.store';
+import { userReducer } from './user.store';
 
 declare global {
     interface Window {
@@ -16,6 +18,8 @@ export const store = configureStore({
         burger: burgerConstructorReducer,
         currentIngredient: currentIngredientReducer,
         order: orderReducer,
+        auth: authReducer,
+        user: userReducer,
     },
 });
 

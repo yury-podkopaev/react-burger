@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./store";
-import { fetchUrl } from "../utils/fetch-url";
+import { fetchWithRefresh } from "../utils/fetch-with-refresh";
 
 const initialState: {
   name: string;
@@ -11,7 +11,7 @@ const initialState: {
 };
 
 export const sendOrder = createAsyncThunk("sendOrder", async (ingredients: string[]) => {
-    return await fetchUrl("/orders", {
+    return await fetchWithRefresh("/orders", {
       method: "POST",
       body: JSON.stringify({ ingredients }),
       headers: {

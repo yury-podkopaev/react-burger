@@ -6,32 +6,47 @@ import { IngredientDetailsProps } from "./ingredient-details/ingredient-details.
 import { Modal } from "../modal/modal.component";
 import { IngredientDetails } from "./ingredient-details/ingredient-details.component";
 import { INGREDIENT_TYPE } from "../../constants";
-import { useAppSelector } from "../../services/hooks";
-import { selectBun, selectBurgerConstructor } from "../../services/burger-constructor.store";
-import { useDispatch } from "react-redux";
-import { clearCurrentIngredient, selectCurrentIngredient, setCurrentIngredient } from "../../services/current-ingredient.store";
-import { selectIngredients } from "../../services/burger-ingredients.store";
+import { useAppDispatch, useAppSelector } from "../../services/hooks";
+import {
+  selectBun,
+  selectBurgerConstructor,
+} from "../../services/burger-constructor.store";
+import {
+  clearCurrentIngredient,
+  selectCurrentIngredient,
+  setCurrentIngredient,
+} from "../../services/current-ingredient.store";
+import {
+  selectIngredients,
+} from "../../services/burger-ingredients.store";
 
 const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = React.useState(INGREDIENT_TYPE.BUN);
   const burgerConstructor = useAppSelector(selectBurgerConstructor);
   const currentIngredient = useAppSelector(selectCurrentIngredient);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const burgerIngredients = useAppSelector(selectIngredients);
   const actualBun = useAppSelector(selectBun);
 
-  const count = useCallback((item: IngredientDetailsProps) => {
-    return item._id === actualBun?._id
-      ? 2
-      : burgerConstructor.filter((ingr) => ingr._id === item._id).length;
-  },[burgerConstructor, actualBun]);
+  const count = useCallback(
+    (item: IngredientDetailsProps) => {
+      return item._id === actualBun?._id
+        ? 2
+        : burgerConstructor.filter((ingr) => ingr._id === item._id).length;
+    },
+    [burgerConstructor, actualBun]
+  );
 
   useEffect(() => {
-    document.getElementById('scrollable')?.addEventListener('scroll', calculateActiveTab);
+    document
+      .getElementById("scrollable")
+      ?.addEventListener("scroll", calculateActiveTab);
     return () => {
-      document.getElementById('scrollable')?.removeEventListener('scroll', calculateActiveTab);
+      document
+        .getElementById("scrollable")
+        ?.removeEventListener("scroll", calculateActiveTab);
     };
-  })
+  });
 
   const tabs = [
     {
@@ -62,7 +77,9 @@ const BurgerIngredients = () => {
 
   const onOpen = (entry: SyntheticEvent) => {
     const id = entry.currentTarget.id;
-    dispatch(setCurrentIngredient(burgerIngredients.find((ingr) => ingr._id === id)));
+    dispatch(
+      setCurrentIngredient(burgerIngredients.find((ingr) => ingr._id === id))
+    );
   };
 
   const onClose = () => {
@@ -70,7 +87,7 @@ const BurgerIngredients = () => {
   };
 
   const calculateActiveTab = () => {
-    tabs.every(tab => {
+    tabs.every((tab) => {
       const elem = document.getElementById(tab.type);
       const bottom = elem?.getBoundingClientRect().bottom ?? 0;
       if (bottom > 0) {
@@ -104,16 +121,15 @@ const BurgerIngredients = () => {
         {tabs.map((tab) => {
           return (
             <React.Fragment key={tab.type}>
-              <span id={tab.type}
+              <span
+                id={tab.type}
                 className={`${styles.tabname} text text_type_main-medium mt-10 mb-6`}
               >
                 {tab.text}
               </span>
               <div className={styles.ingredient}>
                 {burgerIngredients
-                  .filter(
-                    (entry) => entry.type === tab.type
-                  )
+                  .filter((entry) => entry.type === tab.type)
                   .map((entry) => {
                     return (
                       <Ingredient
@@ -128,11 +144,6 @@ const BurgerIngredients = () => {
             </React.Fragment>
           );
         })}
-        {currentIngredient._id && (
-          <Modal onClose={onClose} header="Детали ингредиента">
-            <IngredientDetails {...currentIngredient} />
-          </Modal>
-        )}
       </div>
     </>
   );
