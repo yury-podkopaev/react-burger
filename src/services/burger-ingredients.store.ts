@@ -25,7 +25,7 @@ const initialState: {
   isError: false,
 };
 
-export const ingredientsSlice = createSlice({
+const ingredientsSlice = createSlice({
   name: "ingredients",
   initialState: initialState,
   reducers: {

@@ -20,7 +20,6 @@ export const refreshToken = async () => {
 export const fetchWithRefresh = async (url: string, options?: RequestInit) => { 
   try {
     const res = await fetch(`${BASE_URL}${url}`, {...options, headers: {...options?.headers, 'Authorization': localStorage.getItem('token') ?? ''}});
-    
     return await checkResponse(res);
   } catch (err: any) {    
     if (err.message === "jwt expired") {
@@ -29,12 +28,8 @@ export const fetchWithRefresh = async (url: string, options?: RequestInit) => {
         return Promise.reject(refreshData);
       }
       localStorage.setItem("refreshToken", refreshData.refreshToken);
-      localStorage.setItem("accessToken", refreshData.accessToken);
-      (options?.headers as Headers).append(
-        "Authorization",
-        refreshData.accessToken
-      );
-      const res = await fetch(`${BASE_URL}${url}`, options); //повторяем запрос
+      localStorage.setItem("token", refreshData.accessToken);
+      const res = await fetch(`${BASE_URL}${url}`, {...options, headers: {...options?.headers, 'Authorization': localStorage.getItem('token') ?? ''}}); //повторяем запрос
       return await checkResponse(res);
     } else {
       return Promise.reject(err);

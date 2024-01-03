@@ -5,7 +5,7 @@ import {
   EditIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { UserData } from "../user.types";
-import { getUser, updateUser } from "../../../services/user.store";
+import { getUser, selectIsUserLoading, updateUser } from "../../../services/user.store";
 import { selectUser } from "../../../services/auth.store";
 import { useAppDispatch, useAppSelector } from "../../../services/hooks";
 
@@ -13,6 +13,7 @@ export const UserDataPage = () => {
   const [isDataChanged, setDataChanged] = useState(false);
 
   const initialData: UserData = useAppSelector(selectUser);
+  const isUserLoading = useAppSelector(selectIsUserLoading);
   const [formData, setFormData] = useState(initialData);
   const dispatch = useAppDispatch();
 
@@ -43,12 +44,10 @@ export const UserDataPage = () => {
     e.preventDefault();
     setDataChanged(false);
     dispatch(updateUser(formData));
-  };
-
-  console.log(formData);
-  
+  };  
 
   return (
+    isUserLoading ? <div>LOADING</div> :
     <form
       onReset={handleReset}
       onSubmit={handleSubmit}

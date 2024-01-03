@@ -7,7 +7,7 @@ const AppHeader = () => {
   const location = useLocation();
   
   const menuButtons = [
-    { text: "Конструктор", icon: <BurgerIcon type="secondary"/>, link: '/home' },
+    { text: "Конструктор", icon: <BurgerIcon type="secondary"/>, link: '/' },
     { text: "Лента заказов", icon: <ListIcon type="secondary"/>, link: '/orders' },
   ];
 
@@ -19,7 +19,7 @@ const AppHeader = () => {
             {menuButtons.map((btn, index) => {
                 return <a href={btn.link} key={index} className={`${styles.button} mt-4 ${isActive(btn.link) && styles.active}`}>{btn.icon} <span className={`text text_type_main-small ml-2`}>{btn.text}</span></a>
             })}
-        <div className={styles.logo}><Logo/></div>
+        <a href='/' className={styles.logo}><Logo/></a>
         <NavLink to='/profile' className={`${styles.button} mt-4 ${isActive('/profile') && styles.active}`}><ProfileIcon type="secondary"/> <span className={`text text_type_main-small ml-2`}>Личный кабинет</span></NavLink>
         </div>
     </header >

@@ -7,7 +7,6 @@ import {
 } from "../protected-route/protected-route.component";
 import { Login } from "../../pages/login/login";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { setIsAuthChecked, setToken } from "../../services/auth.store";
 import { NotFoundPage } from "../../pages/not-found/not-found";
 import { IngredientDetails } from "../burger-ingredients/ingredient-details/ingredient-details.component";
@@ -17,9 +16,11 @@ import { ForgotPasswordPage } from "../../pages/forgot-password/forgot-password"
 import { UserDataPage } from "../../pages/profile/user-data/user-data";
 import { ProfilePage } from "../../pages/profile/profile";
 import { ResetPasswordPage } from "../../pages/reset-password/reset-password";
+import { fetchIngredients } from "../../services/burger-ingredients.store";
+import { useAppDispatch } from "../../services/hooks";
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const background = location.state && location.state.background;
@@ -32,6 +33,7 @@ function App() {
     const token = localStorage.getItem("token");
     token && dispatch(setToken(token));
     dispatch(setIsAuthChecked(true));
+    dispatch(fetchIngredients());
   }, [dispatch]);
 
   return (
@@ -53,9 +55,9 @@ function App() {
         />
         <Route
           path="/ingredients/:ingredientId"
-          element={<OnlyAuth element={<IngredientDetails />} />}
+          element={<IngredientDetails />}
         />
-        <Route path="/home" element={<OnlyAuth element={<HomePage />} />} />
+        <Route path="/" element={<HomePage />} />
         {/* <Route path="/orders-list" element={<OnlyAuth element={<HomePage />} />} /> */}
         <Route path="/profile" element={<OnlyAuth element={<ProfilePage />} />}>
           <Route

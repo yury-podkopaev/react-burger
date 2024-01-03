@@ -25,7 +25,15 @@ export const updateUser = createAsyncThunk(
   }
 );
 
-const initialState: UserData = { name: "", email: "", password: "" };
+const initialState: {
+  isLoading: boolean,
+  isError: boolean,
+  user: UserData,
+} = {
+  isLoading: true,
+  isError: false,
+  user: { name: "", email: "", password: "" },
+};
 
 const userSlice = createSlice({
     name: "user",
@@ -33,10 +41,12 @@ const userSlice = createSlice({
     reducers:{},
     extraReducers(builder) {
         builder.addCase(getUser.fulfilled, (state, action) => {
-            state = {...action.payload}
+            state.isLoading = false;
+            state.user = {...action.payload.user, password: ''};
         })
         .addCase(updateUser.fulfilled, (state, action) => {
-            state = {...action.payload};
+            state.isLoading = false;
+            state.user = {...action.payload};
             alert('Updated successfully');
         })
         .addCase(updateUser.rejected, (state, action) => {
@@ -46,4 +56,5 @@ const userSlice = createSlice({
 });
 
 export const userReducer = userSlice.reducer;
-export const selectUser = (state: RootState) => state.user;
+export const selectUser = (state: RootState) => state.user.user;
+export const selectIsUserLoading = (state: RootState) => state.user.isLoading;

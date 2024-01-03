@@ -34,11 +34,11 @@ export const logout = createAsyncThunk("logout", async (token: string) => {
 });
 
 const initialState = {
-  isAuthChecked: false,
-  isAuthorized: false,
+  isAuthChecked: !!localStorage.getItem("token") ?? false,
+  isAuthorized: !!localStorage.getItem("token") ?? false,
   user: { name: "", email: "", password: "" },
   token: localStorage.getItem("token") ?? '',
-  refreshToken: "",
+  refreshToken: localStorage.getItem("refreshToken") ?? "",
 };
 
 const authSlice = createSlice({
@@ -66,7 +66,10 @@ const authSlice = createSlice({
     })
     .addCase(logout.fulfilled, (state) => {
       localStorage.removeItem('token');
-      state = {...initialState};      
+      localStorage.removeItem('refreshToken');      
+      state.user = {...initialState.user};
+      state.isAuthorized = false;
+      state.isAuthChecked = false;
     });
   },
 });

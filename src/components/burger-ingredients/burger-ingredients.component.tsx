@@ -3,8 +3,6 @@ import styles from "./burger-ingredients.module.css";
 import React, { SyntheticEvent, useCallback, useEffect } from "react";
 import Ingredient from "./ingredient/ingredient.component";
 import { IngredientDetailsProps } from "./ingredient-details/ingredient-details.types";
-import { Modal } from "../modal/modal.component";
-import { IngredientDetails } from "./ingredient-details/ingredient-details.component";
 import { INGREDIENT_TYPE } from "../../constants";
 import { useAppDispatch, useAppSelector } from "../../services/hooks";
 import {
@@ -12,8 +10,6 @@ import {
   selectBurgerConstructor,
 } from "../../services/burger-constructor.store";
 import {
-  clearCurrentIngredient,
-  selectCurrentIngredient,
   setCurrentIngredient,
 } from "../../services/current-ingredient.store";
 import {
@@ -23,7 +19,6 @@ import {
 const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = React.useState(INGREDIENT_TYPE.BUN);
   const burgerConstructor = useAppSelector(selectBurgerConstructor);
-  const currentIngredient = useAppSelector(selectCurrentIngredient);
   const dispatch = useAppDispatch();
   const burgerIngredients = useAppSelector(selectIngredients);
   const actualBun = useAppSelector(selectBun);
@@ -80,10 +75,6 @@ const BurgerIngredients = () => {
     dispatch(
       setCurrentIngredient(burgerIngredients.find((ingr) => ingr._id === id))
     );
-  };
-
-  const onClose = () => {
-    dispatch(clearCurrentIngredient());
   };
 
   const calculateActiveTab = () => {
