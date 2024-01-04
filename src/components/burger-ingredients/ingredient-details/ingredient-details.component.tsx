@@ -9,20 +9,24 @@ export const IngredientDetails = () => {
   const ingredients = useAppSelector(selectIngredients);
 
   let currentIngredient = useAppSelector(selectCurrentIngredient);
-    
-  if(!currentIngredient._id) { currentIngredient = ingredients.find(
-      (ingredient) => ingredient._id === location.pathname.split("/")[2]
-    ) ?? currentIngredient;}
+
+  if (!currentIngredient._id) {
+    currentIngredient =
+      ingredients.find(
+        (ingredient) => ingredient._id === location.pathname.split("/")[2]
+      ) ?? currentIngredient;
+  }
 
   return !currentIngredient._id ? (
     <div>LOADING</div>
   ) : (
     <>
-      <img
-        className={`${styles.image} ml-20`}
-        src={currentIngredient.image_large}
-        alt={currentIngredient.name}
-      />
+      <div className={`${styles.image}`}>
+        <img
+          src={currentIngredient.image_large}
+          alt={currentIngredient.name}
+        />
+      </div>
       <p className={`${styles.name} text text_type_main-medium mt-4 mb-8`}>
         {currentIngredient.name}
       </p>

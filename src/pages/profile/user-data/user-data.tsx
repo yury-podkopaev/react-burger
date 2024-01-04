@@ -5,8 +5,8 @@ import {
   EditIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { UserData } from "../user.types";
-import { getUser, selectIsUserLoading, updateUser } from "../../../services/user.store";
-import { selectUser } from "../../../services/auth.store";
+import { getUser, selectIsUserLoading, updateUser, selectUser } from "../../../services/user.store";
+// import { selectUser } from "../../../services/auth.store";
 import { useAppDispatch, useAppSelector } from "../../../services/hooks";
 
 export const UserDataPage = () => {
@@ -14,17 +14,17 @@ export const UserDataPage = () => {
 
   const initialData: UserData = useAppSelector(selectUser);
   const isUserLoading = useAppSelector(selectIsUserLoading);
-  const [formData, setFormData] = useState(initialData);
+  let formData = initialData;
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getUser());
+    dispatch(getUser());    
   }, [dispatch]);
 
   const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDataChanged(true);
     const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
+    formData = { ...formData, [name]: value };
   };
 
   const handleEditClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -36,7 +36,7 @@ export const UserDataPage = () => {
   };
 
   const handleReset = () => {
-    setFormData(initialData);
+    formData = initialData;
     setDataChanged(false);
   };
 
