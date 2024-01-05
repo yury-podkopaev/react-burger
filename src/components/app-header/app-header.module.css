@@ -31,3 +31,7 @@ a:link {
   align-items: self-start;
   color: #8585ad;
 }
+
+.active {
+  color: #fff !important;
+}

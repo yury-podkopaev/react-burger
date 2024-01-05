@@ -5,18 +5,18 @@ import App from "./components/app/app";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { store } from "./services/store";
-import { fetchIngredients } from "./services/burger-ingredients.store";
+import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-store.dispatch(fetchIngredients());  
-
 root.render(
   <Provider store={store}>
     <React.StrictMode>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </React.StrictMode>
   </Provider>
 );
