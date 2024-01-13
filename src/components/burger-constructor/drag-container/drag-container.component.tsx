@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { useDrag, useDrop } from "react-dnd";
+import { DragSourceMonitor, useDrag, useDrop } from "react-dnd";
 import type { Identifier, XYCoord } from "dnd-core";
 import { DragContainerType } from "./drag-container.types";
 import { useDispatch } from "react-redux";
@@ -83,7 +83,7 @@ export const DragContainer = (props: DragContainerType) => {
     item: () => {
       return { id, index };
     },
-    collect: (monitor) => ({
+    collect: (monitor: DragSourceMonitor) => ({
       isDragging: monitor.isDragging(),
     }),
   });
