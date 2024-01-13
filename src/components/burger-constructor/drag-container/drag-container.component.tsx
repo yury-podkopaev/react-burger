@@ -83,7 +83,7 @@ export const DragContainer = (props: DragContainerType) => {
     item: () => {
       return { id, index };
     },
-    collect: (monitor: any) => ({
+    collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   });

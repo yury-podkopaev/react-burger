@@ -3,7 +3,7 @@ import { fetchUrl } from "../utils/fetch-url";
 import { RootState } from "./store";
 import { UserData } from "../pages/profile/user.types";
 
-export const login = createAsyncThunk("login", async (userData: any) => {
+export const login = createAsyncThunk("login", async (userData: Omit<UserData, 'name'>) => {
   return await fetchUrl("/auth/login", {
     method: "POST",
     body: JSON.stringify({ ...userData }),

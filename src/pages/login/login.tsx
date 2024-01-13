@@ -7,13 +7,10 @@ import {
   ShowIcon,
   HideIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { UserData } from "../profile/user.types";
 
 export const Login = () => {
-  interface LoginData {
-    email: string;
-    password: string;
-  }
-  const initialData: LoginData = { email: "", password: "" };
+  const initialData: Omit<UserData, 'name'> = { email: "", password: "" };
   const [formData, setFormData] = useState(initialData);
   const [passwordType, setPasswordType] = useState("password");
   const dispatch = useAppDispatch();
