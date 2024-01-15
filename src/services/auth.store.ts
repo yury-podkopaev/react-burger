@@ -3,8 +3,14 @@ import { fetchUrl } from "../utils/fetch-url";
 import { RootState } from "./store";
 import { UserData } from "../pages/profile/user.types";
 
+interface ResponseData {
+  user: UserData,
+  accessToken: string,
+  refreshToken: string,
+}
+
 export const login = createAsyncThunk("login", async (userData: Omit<UserData, 'name'>) => {
-  return await fetchUrl("/auth/login", {
+  return await fetchUrl<ResponseData>("/auth/login", {
     method: "POST",
     body: JSON.stringify({ ...userData }),
     headers: {
@@ -14,7 +20,7 @@ export const login = createAsyncThunk("login", async (userData: Omit<UserData, '
 });
 
 export const register = createAsyncThunk("register", async (userData: UserData) => {
-  return await fetchUrl("/auth/register", {
+  return await fetchUrl<ResponseData>("/auth/register", {
     method: "POST",
     body: JSON.stringify({ ...userData }),
     headers: {
