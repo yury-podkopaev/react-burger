@@ -10,7 +10,6 @@ import { Modal } from "../modal/modal.component";
 import { OrderDetails } from "../order-details/order-details.component";
 import { INGREDIENT_TYPE } from "../../constants";
 import { useDrop } from "react-dnd";
-import { useDispatch } from "react-redux";
 import {
   addIngredient,
   removeIngredient,
@@ -19,7 +18,7 @@ import {
   setBun,
 } from "../../services/burger-constructor.store";
 import { IngredientProps } from "../burger-ingredients/ingredient/ingredient.types";
-import { useAppSelector } from "../../services/hooks";
+import { useAppDispatch, useAppSelector } from "../../services/hooks";
 import { selectOrderNumber, sendOrder } from "../../services/order.store";
 import { store } from "../../services/store";
 import { ErrorComponent } from "../error/error.component";
@@ -27,7 +26,7 @@ import { DragContainer } from "./drag-container/drag-container.component";
 
 const BurgerConstructor = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const orderNumber = useAppSelector(selectOrderNumber);
   const currentBurger = useAppSelector(selectBurgerConstructor);
   const actualBun = useAppSelector(selectBun);

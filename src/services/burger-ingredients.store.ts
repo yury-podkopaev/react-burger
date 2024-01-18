@@ -6,7 +6,7 @@ import { fetchWithRefresh } from "../utils/fetch-with-refresh";
 export const fetchIngredients = createAsyncThunk(
   "fetchIngredients",
   async () => {
-     return await fetchWithRefresh('/ingredients', {
+     return await fetchWithRefresh<{ data: IngredientDetailsProps[], success: boolean }>('/ingredients', {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

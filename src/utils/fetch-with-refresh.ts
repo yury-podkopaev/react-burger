@@ -1,10 +1,10 @@
 import { BASE_URL } from "../constants";
 
-const checkResponse = (res: Response) => {
+const checkResponse = <T>(res: Response): Promise<T> => {
   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };
 
-export const refreshToken = async () => {
+export const refreshToken = async <T> (): Promise<T> => {
   const res = await fetch(`${BASE_URL}/auth/token`, {
         method: "POST",
         headers: {
@@ -14,23 +14,23 @@ export const refreshToken = async () => {
             token: localStorage.getItem("refreshToken"),
         }),
     });
-    return checkResponse(res);
+    return checkResponse<T>(res);
 };
 
-export const fetchWithRefresh = async (url: string, options?: RequestInit) => { 
+export const fetchWithRefresh = async <T> (url: string, options?: RequestInit):Promise<T> => { 
   try {
     const res = await fetch(`${BASE_URL}${url}`, {...options, headers: {...options?.headers, 'Authorization': localStorage.getItem('token') ?? ''}});
-    return await checkResponse(res);
+    return await checkResponse<T>(res);
   } catch (err: any) {    
     if (err.message === "jwt expired") {
-      const refreshData = await refreshToken(); //обновляем токен
+      const refreshData = await refreshToken<{ success: boolean, refreshToken: string, accessToken: string }>(); //обновляем токен
       if (!refreshData.success) {
         return Promise.reject(refreshData);
       }
       localStorage.setItem("refreshToken", refreshData.refreshToken);
       localStorage.setItem("token", refreshData.accessToken);
       const res = await fetch(`${BASE_URL}${url}`, {...options, headers: {...options?.headers, 'Authorization': localStorage.getItem('token') ?? ''}}); //повторяем запрос
-      return await checkResponse(res);
+      return await checkResponse<T>(res);
     } else {
       return Promise.reject(err);
     }

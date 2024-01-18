@@ -1,6 +1,6 @@
 export interface IngredientDetailsProps {
-    uuid?: any
-    _id: string
+    uuid?: string,
+    _id: string,
     name: string,
     type: string,
     proteins: number,

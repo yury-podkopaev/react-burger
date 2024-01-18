@@ -2,16 +2,18 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import { fetchWithRefresh } from "../utils/fetch-with-refresh";
 
-const initialState: {
+interface OrderData {
   name: string;
   order: { number: number };
-} = {
+}
+
+const initialState: OrderData = {
   name: "",
   order: { number: 0 },
 };
 
 export const sendOrder = createAsyncThunk("sendOrder", async (ingredients: string[]) => {
-    return await fetchWithRefresh("/orders", {
+    return await fetchWithRefresh<OrderData>("/orders", {
       method: "POST",
       body: JSON.stringify({ ingredients }),
       headers: {

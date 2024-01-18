@@ -1,10 +1,10 @@
 import { useRef } from "react";
-import { useDrag, useDrop } from "react-dnd";
+import { DragSourceMonitor, useDrag, useDrop } from "react-dnd";
 import type { Identifier, XYCoord } from "dnd-core";
 import { DragContainerType } from "./drag-container.types";
-import { useDispatch } from "react-redux";
 import { reorderBurgerConstructor } from "../../../services/burger-constructor.store";
 import styles from "./drag-container.module.css";
+import { useAppDispatch } from "../../../services/hooks";
 
 interface DragItem {
   index: number;
@@ -13,7 +13,7 @@ interface DragItem {
 }
 
 export const DragContainer = (props: DragContainerType) => {
-   const dispatch = useDispatch();
+   const dispatch = useAppDispatch();
     
   const { children, id, index } = props;
   const ref = useRef<HTMLLIElement>(null);
@@ -83,7 +83,7 @@ export const DragContainer = (props: DragContainerType) => {
     item: () => {
       return { id, index };
     },
-    collect: (monitor: any) => ({
+    collect: (monitor: DragSourceMonitor) => ({
       isDragging: monitor.isDragging(),
     }),
   });

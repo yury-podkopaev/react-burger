@@ -1,7 +1,7 @@
 import { BASE_URL } from "../constants";
 
-export const fetchUrl = async (url: string, options?: RequestInit) => {
-    return await fetch(BASE_URL + url, options).then(res => {
+export const fetchUrl = async <T>(url: string, options?: RequestInit): Promise<T> => {
+    return await fetch(BASE_URL + url, options).then(async res => {
         if (res.ok) {
             return res.json();
         }

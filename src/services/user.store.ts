@@ -4,7 +4,7 @@ import { UserData } from "../pages/profile/user.types";
 import { RootState } from "./store";
 
 export const getUser = createAsyncThunk("getUser", async () => {
-  return await fetchWithRefresh("/auth/user", {
+  return await fetchWithRefresh<{ user: UserData}>("/auth/user", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -15,7 +15,7 @@ export const getUser = createAsyncThunk("getUser", async () => {
 export const updateUser = createAsyncThunk(
   "updateUser",
   async (userData: UserData) => {
-    return await fetchWithRefresh("/auth/user", {
+    return await fetchWithRefresh<UserData>("/auth/user", {
       method: "PATCH",
       body: JSON.stringify({ ...userData }),
       headers: {
