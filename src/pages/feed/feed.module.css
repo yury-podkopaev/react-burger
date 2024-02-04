@@ -1,0 +1,35 @@
+.body {
+  display: flex;
+  height: 90vh;
+  column-count: 2;
+  justify-content: space-evenly;
+}
+
+.header {
+    display: flex;
+}
+
+.right {
+    display: flex;
+    width: 33vw;
+    flex-direction: column;
+}
+
+.left {
+    width: 33vw;
+}
+
+.wrapper {
+    overflow: scroll;
+    height: 82vh;
+    overflow-x: hidden;
+}
+
+.orderStates {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}  
+
+.list { 
+    flex-wrap: nowrap;
+}

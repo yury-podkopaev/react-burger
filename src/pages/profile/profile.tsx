@@ -13,7 +13,7 @@ export const ProfilePage = () => {
         <Link to="/profile" className={`${styles.point}`}>
           Профиль
         </Link>
-        <Link to="/orders-list" className={`${styles.point}`}>
+        <Link to="/profile/orders" className={`${styles.point}`}>
           История заказов
         </Link>
         <Link to="/login" className={`${styles.point}`} onClick={() => dispatch(logout(refreshToken))}>

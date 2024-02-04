@@ -18,6 +18,9 @@ import { ProfilePage } from "../../pages/profile/profile";
 import { ResetPasswordPage } from "../../pages/reset-password/reset-password";
 import { fetchIngredients } from "../../services/burger-ingredients.store";
 import { useAppDispatch } from "../../services/hooks";
+import { Orders } from "../../pages/profile/orders/orders";
+import { OrderDetails } from "../orders-list/order-details/order-details.component";
+import { Feed } from "../../pages/feed/feed";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -58,7 +61,8 @@ function App() {
           element={<IngredientDetails />}
         />
         <Route path="/" element={<HomePage />} />
-        {/* <Route path="/orders-list" element={<OnlyAuth element={<HomePage />} />} /> */}
+        <Route path="/feed" element={<Feed />} />
+        <Route path="/feed/:number" element={<OrderDetails />} />
         <Route path="/profile" element={<OnlyAuth element={<ProfilePage />} />}>
           <Route
             index
@@ -67,11 +71,11 @@ function App() {
           />
           <Route
             path="/profile/orders"
-            element={<OnlyAuth element={<NotFoundPage />} />}
+            element={<OnlyAuth element={<Orders />} />}
           />
           <Route
-            path="/profile/orders/:id"
-            element={<OnlyAuth element={<NotFoundPage />} />}
+            path="/profile/orders/:number"
+            element={<OnlyAuth element={<OrderDetails />} />}
           />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
@@ -82,8 +86,16 @@ function App() {
           <Route
             path="/ingredients/:ingredientId"
             element={
-              <Modal onClose={handleModalClose}  header="Детали ингредиента">
+              <Modal onClose={handleModalClose} header="Детали ингредиента">
                 <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path="/feed/:number"
+            element={
+              <Modal onClose={handleModalClose} header="Детали заказа ">
+                <OrderDetails />
               </Modal>
             }
           />

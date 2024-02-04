@@ -1,7 +1,7 @@
-import styles from "./order-details.module.css";
+import styles from "./order-confirmation.module.css";
 import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-export const OrderDetails = (props: {orderNumber: number}) => {
+export const OrderConfirmation = (props: {orderNumber: number}) => {
   return (
     <div className={`${styles.body}`}>
       <div className={`text text_type_digits-large mt-15`}>{props.orderNumber}</div>

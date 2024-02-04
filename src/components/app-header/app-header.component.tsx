@@ -8,7 +8,7 @@ const AppHeader = () => {
   
   const menuButtons = [
     { text: "Конструктор", icon: <BurgerIcon type="secondary"/>, link: '/' },
-    { text: "Лента заказов", icon: <ListIcon type="secondary"/>, link: '/orders' },
+    { text: "Лента заказов", icon: <ListIcon type="secondary"/>, link: '/feed' },
   ];
 
   const isActive = (link: string): boolean => location.pathname === link;

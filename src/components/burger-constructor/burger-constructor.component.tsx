@@ -7,7 +7,7 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
 import { useMemo, useState } from "react";
 import { Modal } from "../modal/modal.component";
-import { OrderDetails } from "../order-details/order-details.component";
+import { OrderConfirmation } from "../order-confirmation/order-confirmation.component";
 import { INGREDIENT_TYPE } from "../../constants";
 import { useDrop } from "react-dnd";
 import {
@@ -127,7 +127,7 @@ const BurgerConstructor = () => {
         {isVisible && (
           <Modal onClose={onClose}>
             {orderNumber ? (
-              <OrderDetails orderNumber={orderNumber} />
+              <OrderConfirmation orderNumber={orderNumber} />
             ) : (
               <ErrorComponent />
             )}
