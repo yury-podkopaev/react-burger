@@ -14,7 +14,7 @@ export const refreshToken = async <T> (): Promise<T> => {
             token: localStorage.getItem("refreshToken"),
         }),
     });
-    return checkResponse<T>(res);
+    return res.json();
 };
 
 export const fetchWithRefresh = async <T> (url: string, options?: RequestInit):Promise<T> => { 
@@ -25,6 +25,8 @@ export const fetchWithRefresh = async <T> (url: string, options?: RequestInit):P
     if (err.message === "jwt expired") {
       const refreshData = await refreshToken<{ success: boolean, refreshToken: string, accessToken: string }>(); //обновляем токен
       if (!refreshData.success) {
+        localStorage.setItem("refreshToken", '');
+        localStorage.setItem("token", '');
         return Promise.reject(refreshData);
       }
       localStorage.setItem("refreshToken", refreshData.refreshToken);

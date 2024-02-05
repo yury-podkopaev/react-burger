@@ -20,7 +20,9 @@ export const Modal = (props: ModalProps) => {
     <>
       <div className={styles.modal}>
         <div className={`${styles.header} pt-10 pl-20 pr-10 text text_type_main-medium`}>
-          {props.header}
+        <div
+            className={`${styles.title}`}
+          >{props.header}</div>
           <div className={`${styles.icon} mr-10`}>
             <CloseIcon type="primary" onClick={props.onClose} />
           </div>

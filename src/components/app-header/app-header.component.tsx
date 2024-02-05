@@ -17,9 +17,9 @@ const AppHeader = () => {
     <header className={styles.header}>
         <div className={styles.menu}>
             {menuButtons.map((btn, index) => {
-                return <a href={btn.link} key={index} className={`${styles.button} mt-4 ${isActive(btn.link) && styles.active}`}>{btn.icon} <span className={`text text_type_main-small ml-2`}>{btn.text}</span></a>
+                return <NavLink to={btn.link} key={index} className={`${styles.button} mt-4 ${isActive(btn.link) && styles.active}`}>{btn.icon} <span className={`text text_type_main-small ml-2`}>{btn.text}</span></NavLink>
             })}
-        <a href='/' className={styles.logo}><Logo/></a>
+        <NavLink to='/' className={styles.logo}><Logo/></NavLink>
         <NavLink to='/profile' className={`${styles.button} mt-4 ${isActive('/profile') && styles.active}`}><ProfileIcon type="secondary"/> <span className={`text text_type_main-small ml-2`}>Личный кабинет</span></NavLink>
         </div>
     </header >

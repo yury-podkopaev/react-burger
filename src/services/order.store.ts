@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import { fetchWithRefresh } from "../utils/fetch-with-refresh";
 import { Order } from "../components/orders-list/order-card/order-card.types";
-import { IngredientDetailsProps } from "../components/burger-ingredients/ingredient-details/ingredient-details.types";
 
 interface OrderData {
   name: string;
@@ -11,7 +10,7 @@ interface OrderData {
 
 const initialState: {
   newOrder: OrderData;
-  currentOrder: Order;
+  currentOrder: Omit<Order, "ingredients"> & { ingredients: string[] };
 } = {
   newOrder: { name: "", order: { number: 0 } },
   currentOrder: {
@@ -40,10 +39,7 @@ export const sendOrder = createAsyncThunk(
 
 export const getOrder = createAsyncThunk(
   "getOrder",
-  async (orderId: number, { getState }) => {
-    //@ts-ignore
-    const state: RootState = getState();
-    
+  async (orderId: number) => {    
     const orderList = await fetchWithRefresh<{
       orders: (Omit<Order, "ingredients"> & { ingredients: string[] })[];
       success: boolean;
@@ -53,14 +49,8 @@ export const getOrder = createAsyncThunk(
         "Content-Type": "application/json",
       },
     });
-    const ingredientsList: IngredientDetailsProps[] = state.ingredients.ingredients.data;
-    const order = orderList.orders[0];
-    return {
-      ...order,
-      ingredients: order.ingredients.map((item) => {
-        return ingredientsList.find((ingredient) => ingredient._id === item);
-      }),
-    };
+
+    return orderList.orders[0];
   }
 );
 
@@ -86,7 +76,7 @@ export const orderSlice = createSlice({
         state.newOrder.order.number = 0;
       })
       .addCase(getOrder.fulfilled, (state, action) => {
-        state.currentOrder = action.payload as Order;
+        state.currentOrder = action.payload as Omit<Order, "ingredients"> & { ingredients: string[] };
       });
   },
 });

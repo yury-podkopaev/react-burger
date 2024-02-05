@@ -60,12 +60,13 @@ export const OrderCard = (props: OrderCardProps) => {
         )}
         <div className={`${styles.bottom} mt-6 mb-6`}>
           {props.order.ingredients
+            .filter((value, index, array) => array.indexOf(value) === index)
             .filter((_, index) => {
               return index <= 5;
             })
             .map((ingredient) => (
               <img
-                key={ingredient.uuid}
+                key={ingredient._id}
                 className={`${styles.img}`}
                 src={ingredient.image_mobile}
                 alt={ingredient.name}

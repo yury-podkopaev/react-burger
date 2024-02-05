@@ -38,9 +38,7 @@ export const Feed = () => {
         </span>
         <div className={`${styles.wrapper} mt-10 custom-scroll`}>
           {orderList.map((order) => (
-            <div key={order._id}>
-              <OrderCard isFeed={true} order={order} onClick={onOrderClick} />
-            </div>
+              <OrderCard isFeed={true} order={order} onClick={onOrderClick} key={order._id} />
           ))}
         </div>
       </div>

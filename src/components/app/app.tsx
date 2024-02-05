@@ -73,11 +73,11 @@ function App() {
             path="/profile/orders"
             element={<OnlyAuth element={<Orders />} />}
           />
-          <Route
+        </Route>
+        <Route
             path="/profile/orders/:number"
             element={<OnlyAuth element={<OrderDetails />} />}
           />
-        </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
 
@@ -93,6 +93,14 @@ function App() {
           />
           <Route
             path="/feed/:number"
+            element={
+              <Modal onClose={handleModalClose} header="Детали заказа ">
+                <OrderDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path="/profile/orders/:number"
             element={
               <Modal onClose={handleModalClose} header="Детали заказа ">
                 <OrderDetails />

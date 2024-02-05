@@ -11,7 +11,7 @@
   }
 
   .list {
-    height: 200px;
+    height: 180px;
     overflow: scroll;
     overflow-x: hidden;
   }
@@ -46,7 +46,7 @@
   
   .bottom {
     display: flex;
-    width: 100%;
+    width: 620px;
     justify-content: space-between;
   }
   
