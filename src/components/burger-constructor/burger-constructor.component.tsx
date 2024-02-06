@@ -7,11 +7,12 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
 import { useMemo, useState } from "react";
 import { Modal } from "../modal/modal.component";
-import { OrderDetails } from "../order-details/order-details.component";
+import { OrderConfirmation } from "../order-confirmation/order-confirmation.component";
 import { INGREDIENT_TYPE } from "../../constants";
 import { useDrop } from "react-dnd";
 import {
   addIngredient,
+  clearBurgerConstructor,
   removeIngredient,
   selectBun,
   selectBurgerConstructor,
@@ -23,6 +24,8 @@ import { selectOrderNumber, sendOrder } from "../../services/order.store";
 import { store } from "../../services/store";
 import { ErrorComponent } from "../error/error.component";
 import { DragContainer } from "./drag-container/drag-container.component";
+import { selectIsAuthorized } from "../../services/auth.store";
+import { useNavigate } from "react-router-dom";
 
 const BurgerConstructor = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -30,6 +33,8 @@ const BurgerConstructor = () => {
   const orderNumber = useAppSelector(selectOrderNumber);
   const currentBurger = useAppSelector(selectBurgerConstructor);
   const actualBun = useAppSelector(selectBun);
+  const isAuthorized = useAppSelector(selectIsAuthorized);
+  const navigate = useNavigate();
 
   const [, drop] = useDrop({
     accept: [INGREDIENT_TYPE.MAIN, INGREDIENT_TYPE.SAUCE],
@@ -63,8 +68,17 @@ const BurgerConstructor = () => {
   };
 
   const onSubmitButtonClick = async () => {
-    await store.dispatch(sendOrder(currentBurger.map((item) => item._id)));
-    setIsVisible(true);
+    if (!isAuthorized) {
+      navigate("/login");
+    } else {
+      await store.dispatch(sendOrder([...currentBurger.map((item) => item._id), actualBun!._id]))
+      .then((response) => {
+        setIsVisible(true);
+        if(response.type === 'sendOrder/fulfilled'){
+          dispatch(clearBurgerConstructor());
+        }
+      });
+    }
   };
 
   const onClose = () => {
@@ -120,14 +134,14 @@ const BurgerConstructor = () => {
           htmlType="submit"
           type="primary"
           onClick={onSubmitButtonClick}
-          disabled={!totalPrice}
+          disabled={!actualBun}
         >
           Оформить заказ
         </Button>
         {isVisible && (
           <Modal onClose={onClose}>
             {orderNumber ? (
-              <OrderDetails orderNumber={orderNumber} />
+              <OrderConfirmation orderNumber={orderNumber} />
             ) : (
               <ErrorComponent />
             )}

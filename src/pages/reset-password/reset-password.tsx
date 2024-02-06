@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
 import { Button, HideIcon, ShowIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./reset-password.module.css";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { fetchUrl } from "../../utils/fetch-url";
 
 export const ResetPasswordPage = () => {
@@ -69,7 +69,7 @@ export const ResetPasswordPage = () => {
         Сохранить
       </Button>
       <span className="text text_type_main-small mt-20">
-        Вспомнили пароль? <a href="/login">Войти</a>
+        Вспомнили пароль? <Link to="/login">Войти</Link>
       </span>
     </form>
   );

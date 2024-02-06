@@ -29,6 +29,13 @@
     width: 100%;
 }
 
+.title {
+    display: flex;
+    justify-content: left;
+}
+
 .icon {
+    display: flex;
     cursor: pointer;
+justify-content: right;
 }

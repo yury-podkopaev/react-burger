@@ -6,7 +6,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { UserData } from "../user.types";
 import { getUser, selectIsUserLoading, updateUser, selectUser } from "../../../services/user.store";
-// import { selectUser } from "../../../services/auth.store";
 import { useAppDispatch, useAppSelector } from "../../../services/hooks";
 
 export const UserDataPage = () => {
