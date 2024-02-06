@@ -8,6 +8,7 @@ import {
   HideIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { UserData } from "../profile/user.types";
+import { Link } from "react-router-dom";
 
 export const Login = () => {
   const initialData: Omit<UserData, 'name'> = { email: "", password: "" };
@@ -58,10 +59,10 @@ export const Login = () => {
         Войти
       </Button>
       <span className="text text_type_main-small mt-20">
-        Вы новый пользователь? <a href="/register">Зарегистрироваться</a>
+        Вы новый пользователь? <Link to="/register">Зарегистрироваться</Link>
       </span>
       <span className="text text_type_main-small mt-4">
-        Забыли пароль? <a href="/forgot-password">Восстановить пароль</a>
+        Забыли пароль? <Link to="/forgot-password">Восстановить пароль</Link>
       </span>
     </form>
   );

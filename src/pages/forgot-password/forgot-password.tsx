@@ -2,7 +2,7 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { FormEvent, useState } from "react";
 import styles from './forgot-password.module.css';
 import { fetchUrl } from "../../utils/fetch-url";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const ForgotPasswordPage = () => {
       const [email, setEmail] = useState('');
@@ -34,7 +34,7 @@ export const ForgotPasswordPage = () => {
         Восстановить
       </Button>
       <span className="text text_type_main-small mt-20">
-        Вспомнили пароль? <a href="/login">Войти</a>
+        Вспомнили пароль? <Link to="/login">Войти</Link>
       </span>
     </form>
   );

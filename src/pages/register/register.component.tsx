@@ -4,6 +4,7 @@ import { register } from "../../services/auth.store";
 import { Button, HideIcon, ShowIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./register.module.css";
 import { UserData } from "../profile/user.types";
+import { Link } from "react-router-dom";
 
 export const RegisterPage = () => {
 
@@ -62,7 +63,7 @@ export const RegisterPage = () => {
         Зарегистрироваться
       </Button>
       <span className="text text_type_main-small mt-20">
-        Уже зарегистрированы? <a href="/login">Войти</a>
+        Уже зарегистрированы? <Link to="/login">Войти</Link>
       </span>
     </form>
   );

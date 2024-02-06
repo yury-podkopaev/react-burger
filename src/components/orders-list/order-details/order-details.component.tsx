@@ -13,7 +13,7 @@ import { selectIngredients } from "../../../services/burger-ingredients.store";
 
 export const OrderDetails = () => {
   const location = useLocation();
-  let tempOrder: Omit<Order, "ingredients"> & { ingredients: string[] } =
+  let tempOrder: Omit<Order, "ingredients"> & { ingredients: string[] } | Order =
     useAppSelector(selectCurrentOrder);
   const ingredients = useAppSelector(selectIngredients);
   const dispatch = useAppDispatch();
@@ -22,12 +22,12 @@ export const OrderDetails = () => {
   if(!tempOrder._id){
     dispatch(getOrder(Number(url[url.length - 1])));
   }
-  const currentOrder: Order = {
+  const currentOrder: Order = typeof tempOrder.ingredients[0] === 'string' ? {
     ...tempOrder,
     ingredients: tempOrder.ingredients.map((item) => {
       return ingredients.find((ingredient) => ingredient._id === item)!;
     }),
-  };
+  } : tempOrder as Order;
 
   const countPrice = useMemo(
     () =>
@@ -61,7 +61,7 @@ export const OrderDetails = () => {
         {currentOrder.ingredients
           .filter((value, index, array) => array.indexOf(value) === index)
           .map((ingredient) => (
-            <div className={`${styles.card}`} key={ingredient.uuid}>
+            <div className={`${styles.card}`} key={ingredient._id}>
               <img
                 className={`${styles.img}`}
                 src={ingredient.image_mobile}

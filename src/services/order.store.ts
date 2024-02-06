@@ -10,7 +10,7 @@ interface OrderData {
 
 const initialState: {
   newOrder: OrderData;
-  currentOrder: Omit<Order, "ingredients"> & { ingredients: string[] };
+  currentOrder: Omit<Order, "ingredients"> & { ingredients: string[] } | Order;
 } = {
   newOrder: { name: "", order: { number: 0 } },
   currentOrder: {
