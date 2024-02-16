@@ -1,9 +1,8 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { Order } from "../components/orders-list/order-card/order-card.types";
 import { RootState } from "./store";
-import { fetchWithRefresh } from "../utils/fetch-with-refresh";
 
-enum WebsocketStatus {
+export enum WebsocketStatus {
     CONNECTING = 'CONNECTING...',
     ONLINE = 'ONLINE',
     OFFLINE = 'OFFLINE'

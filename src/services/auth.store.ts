@@ -74,6 +74,8 @@ const authSlice = createSlice({
       localStorage.removeItem('token');
       localStorage.removeItem('refreshToken');      
       state.user = {...initialState.user};
+      state.token = '';
+      state.refreshToken = '';
       state.isAuthorized = false;
       state.isAuthChecked = false;
     });
