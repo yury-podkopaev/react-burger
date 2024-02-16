@@ -15,7 +15,7 @@ export const fetchIngredients = createAsyncThunk(
   }
 );
 
-const initialState: {
+export const initialState: {
   ingredients: { data: IngredientDetailsProps[]; success: boolean };
   isLoading: boolean;
   isError: boolean;

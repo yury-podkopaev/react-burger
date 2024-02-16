@@ -1,10 +1,4 @@
-import { getUser, updateUser, userReducer } from "../../services/user.store";
-
-const initialState = {
-  isLoading: true,
-  isError: false,
-  user: { name: "", email: "", password: "" },
-};
+import { getUser, updateUser, userReducer, initialState } from "../../services/user.store";
 
 const validUser = {
   name: "Test",

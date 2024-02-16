@@ -14,7 +14,7 @@ interface OrderList {
     totalToday: number;
 };
 
-const initialState: {
+export const initialState: {
     orderList: OrderList;
     status: WebsocketStatus,
     connectionError: string,

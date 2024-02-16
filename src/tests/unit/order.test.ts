@@ -4,20 +4,8 @@ import {
   orderReducer,
   sendOrder,
   setCurrentOrder,
+  initialState,
 } from "../../services/order.store";
-
-const initialState = {
-  newOrder: { name: "", order: { number: 0 } },
-  currentOrder: {
-    name: "",
-    ingredients: [],
-    _id: "",
-    status: "",
-    number: 0,
-    createdAt: "",
-    updatedAt: "",
-  },
-};
 
 const validOrderData = { name: "Supertest", order: { number: 123 } };
 

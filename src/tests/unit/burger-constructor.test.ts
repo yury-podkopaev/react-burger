@@ -5,12 +5,8 @@ import {
   removeIngredient,
   reorderBurgerConstructor,
   setBun,
+  initialState,
 } from "../../services/burger-constructor.store";
-
-const initialState = {
-  bun: null,
-  burger: [],
-};
 
 const validIngredient = {
   _id: "10d64577-af2c-4e15-81bb-9e6844340c95",

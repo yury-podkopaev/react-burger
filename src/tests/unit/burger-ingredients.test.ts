@@ -1,13 +1,8 @@
 import {
   fetchIngredients,
   reducer,
+  initialState,
 } from "../../services/burger-ingredients.store";
-
-const initialState = {
-  ingredients: { data: [], success: false },
-  isLoading: true,
-  isError: false,
-};
 
 const validIngredient = {
   _id: "10d64577-af2c-4e15-81bb-9e6844340c95",

@@ -3,7 +3,7 @@ import { IngredientDetailsProps } from "../components/burger-ingredients/ingredi
 import { RootState } from "./store";
 import { v4 as uuidv4 } from "uuid";
 
-const initialState: {
+export const initialState: {
   bun: IngredientDetailsProps | null;
   burger: IngredientDetailsProps[];
 } = {

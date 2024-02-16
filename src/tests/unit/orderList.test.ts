@@ -4,17 +4,8 @@ import {
   wsClose,
   wsOpen,
   wsSetOrderList,
+  initialState,
 } from "../../services/orderList.store";
-
-const initialState = {
-  orderList: {
-    orders: [],
-    total: 0,
-    totalToday: 0,
-  },
-  status: WebsocketStatus.OFFLINE,
-  connectionError: "",
-};
 
 const validOrder = {
   name: "some order",

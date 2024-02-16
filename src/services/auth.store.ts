@@ -39,7 +39,7 @@ export const logout = createAsyncThunk("logout", async (token: string) => {
   });
 });
 
-const initialState = {
+export const initialState = {
   isAuthChecked: !!localStorage.getItem("token") ?? false,
   isAuthorized: !!localStorage.getItem("token") ?? false,
   user: { name: "", email: "", password: "" },

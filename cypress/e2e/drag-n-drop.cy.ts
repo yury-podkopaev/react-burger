@@ -3,7 +3,7 @@ import ingredient from '../fixtures/ingredient.json';
 
 describe('ingredient modal window', () => {
     beforeEach(()=> {
-        cy.visit('http://localhost:3000');
+        cy.visit('');
         cy.fixture('ingredient.json').then((json) => {
             const json2 = {...json, type: 'sauce'};
             cy.intercept('GET', '/api/ingredients', {success: true, data: [json, json2]});

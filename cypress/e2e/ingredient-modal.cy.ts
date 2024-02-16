@@ -2,8 +2,11 @@
 import ingredient from '../fixtures/ingredient.json';
 
 describe('ingredient modal window', () => {
+
+    const detailsText = 'Детали ингредиента';
+
     beforeEach(()=> {
-        cy.visit('http://localhost:3000');
+        cy.visit('');
         cy.fixture('ingredient.json').then((json) => {
             cy.intercept('GET', '/api/ingredients', {success: true, data: [json]});
         });
@@ -11,7 +14,7 @@ describe('ingredient modal window', () => {
 
     it('should open a modal window with correct data on ingredient click', () => {
         cy.get('section').first().click();
-        cy.contains('Детали ингредиента');
+        cy.contains(detailsText);
         cy.contains('Калории, ккал');
         cy.contains(ingredient.calories);
         cy.contains('Белки, г');
@@ -26,16 +29,16 @@ describe('ingredient modal window', () => {
 
     it('should close the window when cross is clicked', () => {
         cy.get('section').first().click();
-        cy.contains('Детали ингредиента');
+        cy.contains(detailsText);
         cy.get('svg').last().click();
-        cy.contains('Детали ингредиента').should('not.exist');
+        cy.contains(detailsText).should('not.exist');
     });
 
     it('should close the window when user clicks outside', () => {
         cy.get('section').first().click();
-        cy.contains('Детали ингредиента');
+        cy.contains(detailsText);
         cy.get('body').click(0,0);
-        cy.contains('Детали ингредиента').should('not.exist');
+        cy.contains(detailsText).should('not.exist');
     });
 
 });

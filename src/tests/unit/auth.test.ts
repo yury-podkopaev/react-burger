@@ -1,13 +1,5 @@
 import { AnyAsyncThunk, RejectedWithValueActionFromAsyncThunk } from "@reduxjs/toolkit/dist/matchers";
-import { authReducer, login, logout, register } from "../../services/auth.store";
-
-const initialState = {
-  isAuthChecked: false,
-  isAuthorized: false,
-  user: { name: "", email: "", password: "" },
-  token: "",
-  refreshToken: "",
-};
+import { authReducer, login, logout, register, initialState } from "../../services/auth.store";
 
 const validUserResponse = {
   user: { name: "Test", email: "user@mail.co", password: "qwerty123123" },
