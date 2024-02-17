@@ -98,7 +98,7 @@ const BurgerConstructor = () => {
           isLocked={true}
         />
       </div>
-      <div className={`${styles.body} custom-scroll`} ref={drop}>
+      <div className={`${styles.body} custom-scroll`} ref={drop} data-testid='constructor-body'>
         <ul className={`${styles.list}`}>
           {currentBurger.map((entry, index: number) => {
             return (

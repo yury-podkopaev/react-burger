@@ -39,7 +39,7 @@ export const logout = createAsyncThunk("logout", async (token: string) => {
   });
 });
 
-const initialState = {
+export const initialState = {
   isAuthChecked: !!localStorage.getItem("token") ?? false,
   isAuthorized: !!localStorage.getItem("token") ?? false,
   user: { name: "", email: "", password: "" },
@@ -74,6 +74,8 @@ const authSlice = createSlice({
       localStorage.removeItem('token');
       localStorage.removeItem('refreshToken');      
       state.user = {...initialState.user};
+      state.token = '';
+      state.refreshToken = '';
       state.isAuthorized = false;
       state.isAuthChecked = false;
     });

@@ -25,7 +25,7 @@ export const updateUser = createAsyncThunk(
   }
 );
 
-const initialState: {
+export const initialState: {
   isLoading: boolean,
   isError: boolean,
   user: UserData,

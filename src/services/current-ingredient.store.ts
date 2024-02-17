@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import { IngredientDetailsProps } from "../components/burger-ingredients/ingredient-details/ingredient-details.types";
 
-const initialState: { currentIngredient: IngredientDetailsProps } = {
+export const initialState: { currentIngredient: IngredientDetailsProps } = {
   currentIngredient: {
     _id: "",
     name: "",

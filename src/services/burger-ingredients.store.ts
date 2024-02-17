@@ -15,7 +15,7 @@ export const fetchIngredients = createAsyncThunk(
   }
 );
 
-const initialState: {
+export const initialState: {
   ingredients: { data: IngredientDetailsProps[]; success: boolean };
   isLoading: boolean;
   isError: boolean;
@@ -28,11 +28,7 @@ const initialState: {
 const ingredientsSlice = createSlice({
   name: "ingredients",
   initialState: initialState,
-  reducers: {
-    setIngredients: (state, action) => {
-      state.ingredients = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchIngredients.fulfilled, (state, action) => {

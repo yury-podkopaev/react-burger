@@ -8,7 +8,7 @@ interface OrderData {
   order: { number: number };
 }
 
-const initialState: {
+export const initialState: {
   newOrder: OrderData;
   currentOrder: Omit<Order, "ingredients"> & { ingredients: string[] } | Order;
 } = {
